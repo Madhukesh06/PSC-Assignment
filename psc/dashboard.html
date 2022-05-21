@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <style>
+        table{
+            width: 50rem;
+            border: 0.1rem solid black;
+            border-collapse: collapse;
+            margin: auto;
+        }
+        tr,th,td{
+            border: 0.05rem solid black;
+            border-collapse: collapse;
+            font-size: 1.5rem;
+            padding: 0.2rem 0.2rem;   
+        }
+        td{
+            text-align: center; 
+        }
+        th{
+            background-color: teal;
+            color: white;
+        }
+        div1{
+            width: 100%;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.1rem 0.1rem 0.1rem 0.1rem;
+        }
+        img{
+            width: 8rem;
+           
+        }
+
+        #navbar{
+        /* border: 1px solid red; */
+        width: 60rem;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding:0.5rem;
+        font-size: 1.2rem;
+        background-color: rgb(47, 77, 112);
+        color: white;
+        height: 2rem;
+        border-radius: 0.5rem;
+       }
+       #cont1{
+        width:25rem;
+        display: flex;
+        justify-content: space-between;
+        padding:0.5rem;
+       }
+       #cont2{
+        width: 18rem;
+        display: flex;
+        justify-content: space-between;
+        padding:0.5rem;
+       }
+       a{
+           font-style: none;
+           text-decoration: none;
+           color: white;
+       }
+       a:hover{
+           color: red;
+       }
+
+    </style>
+
+</head>
+<body>
+
+    <div id="navbar">
+        <div>
+            <h3>Masai</h3>
+        </div>
+
+        <div id="cont1">
+            <h3 id="fw1">FW-16</h3>
+            <h3 id="fw2">FW-17</h3>
+            <h3 id="fw3">FW-18</h3>
+        </div>
+        <div id="cont2">
+            <h3> <a href="index.html">Home-Page</a> </h3>
+            <h3><a href="dashboard.html">Dashboard</a></h3>
+        </div>
+
+    </div>
+
+    </div>
+    <h1 style="text-align: center;">Dashboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Profile</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Batch</th>
+                <th>Unit</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody id="push">
+
+        </tbody>
+        
+    </table>
+</body>
+</html>
+<!-- <td><img id="ft" src="https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652__340.png" alt=""></td> -->
+<script>
+
+
+    let c=localStorage.getItem("token1")||0;
+    document.getElementById("fw1").innerHTML=`FW-16 : ${c}`;
+
+    let d=localStorage.getItem("token2")||0;
+    document.getElementById("fw2").innerHTML=`FW-17 : ${d}`;
+
+    let e=localStorage.getItem("token3")||0;
+    document.getElementById("fw3").innerHTML=`FW-18 : ${e}`;
+
+    let stdData=JSON.parse(localStorage.getItem("data"))||[];
+    display(stdData);
+
+    let trashData= JSON.parse(localStorage.getItem("trash"))||[];    
+
+    function display(data){
+        data.forEach(function(el,index){
+        let TR=document.createElement("tr")
+        
+        let DIV=document.createElement("div")
+        let im=document.createElement("img")
+        let TC1=document.createElement("td")
+        let TC2=document.createElement("td")
+        let TC3=document.createElement("td")
+        let TC4=document.createElement("td")
+        let TC5=document.createElement("td")
+        
+        im.src=el.image;
+        DIV.append(im); 
+
+        TC1.innerHTML=el.name;
+        TC2.innerHTML=el.course;
+        TC3.innerHTML=el.batch;
+        TC4.innerHTML=el.unit;
+        TC5.innerHTML="Delete" 
+        TC5.style.color="red"   
+        TC5.style.cursor="pointer" 
+
+        TC5.addEventListener("click",function(){
+            deleteFunction(el,index);
+        })  
+
+        TR.append(DIV,TC1,TC2,TC3,TC4,TC5);
+        document.getElementById("push").append(TR)
+        });  
+
+        function deleteFunction(el,index){
+        stdData.splice(index,1)
+        localStorage.setItem("data",JSON.stringify(stdData))
+        window.location.reload()
+
+        trashData.push(el)
+        localStorage.setItem("trash",JSON.stringify(trashData))
+
+        if(el.batch==="FW-16"){
+        c--;
+        document.getElementById("fw1").innerHTML=`FW-16 : ${c}`;
+        localStorage.setItem("token1",c)
+        }
+
+        if(el.batch==="FW-17"){
+            d--;
+            document.getElementById("fw2").innerHTML=`FW-17 : ${d}`;
+            localStorage.setItem("token2",d)
+        }
+
+        if(el.batch==="FW-18"){
+            e--;
+            document.getElementById("fw3").innerHTML=`FW-18 : ${e}`;
+            localStorage.setItem("token3",e)
+        }
+        }
+
+}
+       
+
+
+   
+
+
+</script>

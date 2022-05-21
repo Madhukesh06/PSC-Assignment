@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+
+    <style>
+       #form{
+           display: flex;
+           flex-direction: column;
+           width: 20rem;
+           margin: auto;
+           box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+           padding: 2rem;
+           border-radius: 1rem;
+       } 
+       input,select,label,#btn{
+           width: 19.5rem;
+           margin: auto;
+           font-size: 1.5rem;
+           border-radius: 0.2rem;
+           border: 0.5 solid black;
+       }
+       select{
+        border: 0.15rem solid black;
+        width: 20rem;
+           margin: auto;  
+       }
+       #btn{
+            cursor: pointer;
+            margin-top: 0.8rem;
+           border-radius: 0.5rem;
+       }
+       #btn:hover{
+           background-color: teal;
+           color: white;
+       }
+
+       #navbar{
+        /* border: 1px solid red; */
+        width: 60rem;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding:0.5rem;
+        font-size: 1.2rem;
+        background-color: rgb(47, 77, 112);
+        color: white;
+        height: 2rem;
+        border-radius: 0.5rem;
+       }
+       #cont1{
+        width:25rem;
+        display: flex;
+        justify-content: space-between;
+        padding:0.5rem;
+       }
+       #cont2{
+        width: 18rem;
+        display: flex;
+        justify-content: space-between;
+        padding:0.5rem;
+       }
+       a{
+           font-style: none;
+           text-decoration: none;
+           color: white;
+       }
+       a:hover{
+           color: red;
+       }
+
+    </style>
+
+</head>
+<body>
+
+    <div id="navbar">
+        <div>
+            <h3>Masai</h3>
+        </div>
+
+        <div id="cont1">
+            <h3 id="fw1">FW-16</h3>
+            <h3 id="fw2">FW-17</h3>
+            <h3 id="fw3">FW-18</h3>
+        </div>
+        <div id="cont2">
+            <h3> <a href="index.html">Home-Page</a> </h3>
+            <h3><a href="dashboard.html">Dashboard</a></h3>
+        </div>
+
+    </div>
+
+    <h1 style="text-align: center;">STUDENT MANAGEMENT SYSTEM</h1>
+    <form id="form">
+        <label>Name:</label>
+            <input type="text" id="name">
+        <label>Select-Courses:</label>
+        <select name="" id="course">
+            <option value="options">Select</option>
+            <option value="Full Stack">Full Stack</option>
+            <option value="Java">Java</option>
+            <option value="Python">Python</option>
+            <option value="SQL">SQL</option>
+            <option value="Busines Analyst">Busines Analyst</option>
+        </select>
+        <label>Unit:</label>
+            <input type="number" id="unit">
+        <label>Profile-url:</label>
+            <input type="link" id="image">
+        <label>Select-Batch:</label>
+            <select name="" id="batch">
+                <option value="options">Select</option>
+                <option value="FW-16">FW-16</option>
+                <option value="FW-17">FW-17</option>
+                <option value="FW-18">FW-18</option>
+            </select>
+        <button id="btn">Submit</button>
+    </form>
+</body>
+</html>
+
+<script>
+
+let c=localStorage.getItem("token1")||0;
+document.getElementById("fw1").innerHTML=`FW-16 : ${c}`;
+
+let d=localStorage.getItem("token2")||0;
+document.getElementById("fw2").innerHTML=`FW-17 : ${d}`;
+
+let e=localStorage.getItem("token3")||0;
+document.getElementById("fw3").innerHTML=`FW-18 : ${e}`;
+
+let stdData=JSON.parse(localStorage.getItem("data"))||[];
+
+document.getElementById("btn").addEventListener("click",addData);
+
+function addData(){
+    // window.location.reload();
+    event.preventDefault();
+    let ob={
+        name:form.name.value,
+        course:form.course.value,
+        unit:form.unit.value,
+        image:form.image.value,
+        batch:form.batch.value,   
+    }
+    stdData.push(ob);
+    console.log(form.batch.value)
+    localStorage.setItem("data",JSON.stringify(stdData))
+
+    window.location.href="dashboard.html" 
+    
+    if(form.batch.value==="FW-16"){
+        c++;
+        document.getElementById("fw1").innerHTML=`FW-16 : ${c}`;
+        localStorage.setItem("token1",c)
+    }
+
+    if(form.batch.value==="FW-17"){
+        d++;
+        document.getElementById("fw2").innerHTML=`FW-17 : ${d}`;
+        localStorage.setItem("token2",d)
+    }
+
+    if(form.batch.value==="FW-18"){
+        e++;
+        document.getElementById("fw3").innerHTML=`FW-18 : ${e}`;
+        localStorage.setItem("token3",e)
+    }
+}
+
+
+</script>
